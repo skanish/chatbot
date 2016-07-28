@@ -5,9 +5,11 @@ from bottle import route, run, template, static_file, request
 import json
 import datetime
 from random import randint
+import requests
 
 jokes = ["If a robot does the robot dance is it just called dancing?", "10010100010011100101000101001000101011", "What's a robot’s favorite type of music? Heavy metal"]
 
+apiKey = "65fedf97cad5831bd4b42bd28bdc280d"
 
 @route('/', method='GET')
 def index():
@@ -17,7 +19,12 @@ def index():
 @route("/chat", method='POST')
 def chat():
     user_message = request.POST.get('msg').lower()
-    if "love" in user_message:
+    if "weather" in user_message:
+        r = requests.get('http://api.openweathermap.org/data/2.5/weather?q=Tel+Aviv&APPID=' + apiKey + "&units=metric")
+        result = r.json()
+        msg = "The weather forecast for Tel Aviv is " + str(result["main"]["temp"]) + "°C"
+        return json.dumps({"animation": "excited", "msg": msg})
+    elif "love" in user_message:
         return json.dumps({"animation": "inlove", "msg": "I love you!"})
     elif "time" in user_message:
         return time()
