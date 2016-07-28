@@ -1,11 +1,13 @@
 """
 This is the template server side for ChatBot
 """
-from bottle import route, run, template, static_file, request
+from bottle import route, run, template, static_file, request, response
 import json
 import datetime
 from random import randint
 import requests
+
+boto_memory = {"user_name":""}
 
 jokes = ["If a robot does the robot dance is it just called dancing?", "10010100010011100101000101001000101011", "What's a robot’s favorite type of music? Heavy metal"]
 
@@ -19,6 +21,11 @@ def index():
 @route("/chat", method='POST')
 def chat():
     user_message = request.POST.get('msg').lower()
+    boto_memory["user_name"] = request.get_cookie("user_name")
+    if not boto_memory["user_name"]:
+        boto_memory["user_name"] = user_message.split(" ")[0]
+        response.set_cookie("user_name", boto_memory["user_name"])
+        return {"animation": "giggling", "msg": "Nice to meet you " + boto_memory["user_name"]}
     if "weather" in user_message:
         r = requests.get('http://api.openweathermap.org/data/2.5/weather?q=Tel+Aviv&APPID=' + apiKey + "&units=metric")
         result = r.json()
