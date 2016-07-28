@@ -25,7 +25,7 @@ body{
     transform: translateY(-50%) translateX(-50%);
     left: 50%;
     position: absolute;
-    background-color:#B0C4DE;
+    background-color:cornflowerblue;
 }
 
 .chat-window-header{
@@ -34,6 +34,8 @@ body{
 
    background: rgb(0, 0, 0); /* The Fallback */
    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
 
 }
 
@@ -68,7 +70,8 @@ body{
 .chat-send{
 	padding:5px 30px;
 	display:inline-block;
-	background-color:#00FF7F;
+	background-color:lawngreen;
+    color: white;
 	vertical-align: bottom;
 }
 
@@ -119,4 +122,10 @@ body{
     bottom: 0px;
     left: 0px;
     margin: 5px;
+}
+
+.msg{
+    font-family: Helvetica;
+    background-color: lightgray;
+    border-radius: 15px;
 }
